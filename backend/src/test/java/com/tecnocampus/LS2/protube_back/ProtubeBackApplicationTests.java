@@ -4,11 +4,15 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest({
+        "pro_tube.store.dir=c:",
+        "pro_tube.load_initial_data=false"
+})
 class ProtubeBackApplicationTests {
 
     @Test
-    void contextLoads() {
+    void shouldStartApp() {
+
         Double[] expected = new Double[]{2.0};
 
         Assert.assertArrayEquals(expected, new Double[]{2.0});
