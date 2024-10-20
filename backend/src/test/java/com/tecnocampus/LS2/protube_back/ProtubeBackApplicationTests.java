@@ -1,8 +1,12 @@
 package com.tecnocampus.LS2.protube_back;
 
-import org.junit.Assert;
+import com.tecnocampus.LS2.protube_back.services.VideoService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.junit.Assert.assertNotNull;
 
 @SpringBootTest({
         "pro_tube.store.dir=c:",
@@ -10,12 +14,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 })
 class ProtubeBackApplicationTests {
 
+    @Autowired
+    VideoService videoService;
+
     @Test
     void shouldStartApp() {
-
-        Double[] expected = new Double[]{2.0};
-
-        Assert.assertArrayEquals(expected, new Double[]{2.0});
+        Assertions.assertNotNull(videoService);
     }
 
 }
