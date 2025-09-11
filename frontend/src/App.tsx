@@ -1,35 +1,35 @@
-import logo from './assets/logo.svg';
 import './App.css';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
+import axios from "axios";
 
 function App() {
-  const [value, setValue] = useState(0)
+    const [value, setValue] = useState<string[]>([])
+    const [loading, setLoading] = useState<boolean>(false)
 
-  function callme() {
-    console.log(value);
-    setValue(function setterFn(p) { return p + 1 })
-  }
+    useEffect(() => {
+        const getVideos = async () => {
+            setLoading(true)
+            const response = await axios.get<string[]>('http://localhost:8080/api/videos');
+            setValue(response.data);
+            setLoading(false);
+        }
+        getVideos().then();
+    }, []);
 
 
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <button onClick={() => callme()}>
-          {value} Edit <code>src/App.tsx</code> and save to reload.
-        </button>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <header className="App-header">
+                <img src="/protube-logo-removebg-preview.png" className="App-logo" alt="logo"/>
+                {loading ? <p>Loading...</p> : (<>                <strong>Videos available:</strong>
+                        <ul>
+                            {value.map((item) => <li>{item}</li>)}
+                        </ul>
+                    </>
+                )}
+            </header>
+        </div>
+    );
 }
 
 export default App;

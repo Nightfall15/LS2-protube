@@ -23,13 +23,19 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      "@typescript-eslint/typedef": [
+        "error",
+        {
+          "variableDeclaration": true
+        }
+      ]
     },
     overrides: [
       {
         "files": ["**/__tests__/**/*.{ts,tsx}"],
         "env": {
           "jest": true
-        } 
+        }
       }
     ]
   },
