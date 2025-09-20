@@ -44,6 +44,10 @@ jobs:
         working-directory: frontend
         run: npm test
 
+      - name: Run frontend lint
+        working-directory: frontend
+        run: npm lint
+
       - name: Run backend tests
         working-directory: backend
         run: ./mvnw test
