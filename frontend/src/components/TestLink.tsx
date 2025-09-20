@@ -1,18 +1,17 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useState } from 'react';
 
-// Sample component, just to showcase a bit of 
-// react and typescript
+// Sample component, just to showcase a bit of
+// React and typescript
 
 const STATUS = {
-  HOVERED: "hovered",
-  NORMAL: "normal",
+  HOVERED: 'hovered',
+  NORMAL: 'normal',
 };
 
 interface Props {
   page: string;
   children: ReactNode;
 }
-
 
 const TestLink = ({ page, children }: Props) => {
   const [status, setStatus] = useState(STATUS.NORMAL);
@@ -26,12 +25,9 @@ const TestLink = ({ page, children }: Props) => {
   };
 
   return (
-    <a
-      className={status}
-      href={page || "#"}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >    {children}
+    <a className={status} href={page || '#'} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      {' '}
+      {children}
     </a>
   );
 };

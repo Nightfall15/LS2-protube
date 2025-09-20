@@ -1,26 +1,26 @@
-import { act, render } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { setupServer } from "msw/node";
-import { http, HttpResponse } from "msw";
+import { act, render } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { setupServer } from 'msw/node';
+import { http, HttpResponse } from 'msw';
 
-jest.mock("../../../src/utils/Env.ts");
+jest.mock('../../../src/utils/Env.ts');
 
-import VideoGrid from "../VideoGrid";
-import { MemoryRouter } from "react-router-dom";
+import VideoGrid from '../VideoGrid';
+import { MemoryRouter } from 'react-router-dom';
 
 const server = setupServer(
-  http.get("/api/someEndpoint", () => {
+  http.get('/api/someEndpoint', () => {
     return HttpResponse.json([
       {
         id: 23,
-        title: "The Cranberries - Zombie (Alt. Version)",
-        author: "TheCranberriesTV",
+        title: 'The Cranberries - Zombie (Alt. Version)',
+        author: 'TheCranberriesTV',
       },
     ]);
   })
 );
 
-describe("this component", () => {
+describe('this component', () => {
   beforeAll(() => {
     server.listen();
   });
@@ -31,7 +31,7 @@ describe("this component", () => {
   // clean up once the tests are done
   afterAll(() => server.close());
 
-  it("renders correctly", async () => {
+  it('renders correctly', async () => {
     const asFragment = await act(async () => {
       return render(
         <MemoryRouter>

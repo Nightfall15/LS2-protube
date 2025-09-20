@@ -5,7 +5,7 @@ const VideoGrid = () => {
   const [someData, setSomeData] = useState([]);
 
   useEffect(() => {
-    fetch(getEnv().API_BASE_URL + "/someEndpoint")
+    fetch(getEnv().API_BASE_URL + '/someEndpoint')
       .then((res) => {
         return res.json();
       })
@@ -15,13 +15,7 @@ const VideoGrid = () => {
       });
   }, []);
 
-  return (
-    <div className="row g-4">
-      {someData?.map((entity) => (
-        "" + entity
-      ))}
-    </div>
-  );
+  return <div className="row g-4">{someData?.map((entity) => '' + entity)}</div>;
 };
 
 export default VideoGrid;

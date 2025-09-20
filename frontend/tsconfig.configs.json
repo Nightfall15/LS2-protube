@@ -1,0 +1,4 @@
+{
+  "extends": "./tsconfig.json", // or your main config
+  "include": ["*.config.ts"]
+}

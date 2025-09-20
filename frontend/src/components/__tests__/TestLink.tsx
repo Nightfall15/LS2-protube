@@ -1,5 +1,5 @@
-describe('testlink.test', () =>{
-    it('test', () =>{
-        expect(true).toBe(true)
-    })
-})
+describe('testlink.test', () => {
+  it('test', () => {
+    expect(true).toBe(true);
+  });
+});
