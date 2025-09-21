@@ -1,11 +1,14 @@
 {
-  "files": ["vite.config.ts"],
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.node.json"
-    }
+  "files": [
+    "vite.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "extends": [
+    "./tsconfig.app.json",
+    "./tsconfig.node.json",
+    "./tsconfig.configs.json"
   ]
 }

@@ -1,4 +1,9 @@
 {
-  "extends": "./tsconfig.json", // or your main config
-  "include": ["*.config.ts"]
+  "include": ["*.config.ts"],
+  "compilerOptions": {
+    "noEmit": true,
+    "outDir": "./dist/configs",
+    "rootDir": "./",
+    "composite": true
+  }
 }
