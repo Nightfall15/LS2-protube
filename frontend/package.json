@@ -10,7 +10,7 @@
     "lint-fix": "eslint . --fix",
     "format": "prettier --write .",
     "preview": "vite preview",
-    "test": "jest --collectCoverage=true",
+    "test": "jest --collectCoverage=true --coverage",
     "precommit": "lint-staged"
   },
   "dependencies": {

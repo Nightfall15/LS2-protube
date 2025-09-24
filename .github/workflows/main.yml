@@ -20,16 +20,16 @@ jobs:
 
       - name: Install frontend dependencies
         working-directory: frontend
-        run: npm install
+        run: npm ci
 
       - name: Build frontend
         working-directory: frontend
         run: npm run build
 
       - name: Set up Java for backend
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v5
         with:
-          distribution: 'zulu'
+          distribution: 'corretto'
           java-version: '21'
 
       - name: Install Maven Wrapper
@@ -46,7 +46,7 @@ jobs:
 
       - name: Run frontend lint
         working-directory: frontend
-        run: npm lint
+        run: npm run lint
 
       - name: Run backend tests
         working-directory: backend

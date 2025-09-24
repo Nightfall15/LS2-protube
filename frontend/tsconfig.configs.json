@@ -1,5 +1,5 @@
 {
-  "include": ["*.config.ts"],
+  "include": ["*.config.ts","*.setup.ts"],
   "compilerOptions": {
     "noEmit": true,
     "outDir": "./dist/configs",

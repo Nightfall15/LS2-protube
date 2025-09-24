@@ -34,6 +34,7 @@ the student has right to a Recovery exam.
 * The pull request have to be reviewed for some other members of the team and approved **AT LEAST** by one people.
 * Commits should be a definition of the changes done. And should contain a reference of the task. P.e
   using [convention commits](https://www.conventionalcommits.org/en/v1.0.0/#summary)
+* How to [set up a project](./docs/GITHUB_SETUP.md) following Best practises
 
 ### Agile
 
@@ -111,6 +112,16 @@ Engineering:
 * Use of microservices architecture
 * Deploy app
 
+Agile:
+* Keeping all ceremonies on every sprint
+* Use of Gitflow or other similar branching model
+* Presentations of the progress on every demo
+* Use of Jira, Trello or other similar tool to manage the project
+* Use of Confluence or other similar tool to document the project
+* Use of Slack or other similar tool to communicate the team
+* Use of Miro or other similar tool to create diagrams, flowcharts, etc.
+* Use of Figma or other similar tool to create mockups, wireframes, etc.
+* Creating a good backlog with user stories, tasks, etc.
 
 Other:
 * any kind of improvement the team decide have to be discussed with the professor before start working on it.
