@@ -5,6 +5,7 @@
     "outDir": "./dist/configs",
     "rootDir": "./",
     "composite": true,
+    "sourceMap": true,
     "mapRoot": "esnext"
   }
 }
