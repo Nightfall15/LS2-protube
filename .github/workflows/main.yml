@@ -31,7 +31,7 @@ jobs:
 
       - name: Run frontend tests with coverage
         working-directory: frontend
-        run: npm test -- --coverage
+        run: npm run test -- --coverage --watchAll=false --ci
 
       - name: Set up Java for backend
         uses: actions/setup-java@v5
@@ -45,7 +45,8 @@ jobs:
 
       - name: Build and test backend with coverage
         working-directory: backend
-        run: ./mvnw clean verify
+        run: |
+          ./mvnw clean verify -Pcoverage
 
       - name: Run frontend lint
         working-directory: frontend
@@ -56,7 +57,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: frontend-coverage-report
-          path: frontend/coverage/lcov-report/
+          path: frontend/coverage/
           if-no-files-found: error
 
       # Upload Backend Coverage
