@@ -1,43 +1,18 @@
 import { act, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { setupServer } from 'msw/node';
-import { http, HttpResponse } from 'msw';
-
-jest.mock('../../../src/utils/Env.ts');
 
 import VideoGrid from '../VideoGrid';
-import { MemoryRouter } from 'react-router-dom';
-
-const server = setupServer(
-  http.get('/api/someEndpoint', () => {
-    return HttpResponse.json([
-      {
-        id: 23,
-        title: 'The Cranberries - Zombie (Alt. Version)',
-        author: 'TheCranberriesTV',
-      },
-    ]);
-  })
-);
+import fetchMock from 'jest-fetch-mock';
 
 describe('this component', () => {
-  beforeAll(() => {
-    server.listen();
+  beforeEach(() => {
+    fetchMock.resetMocks(); // Reset mocks before each test
   });
 
-  // reset any request handlers that are declared as a part of our tests
-  // (i.e. for testing one-time error scenarios)
-  afterEach(() => server.resetHandlers());
-  // clean up once the tests are done
-  afterAll(() => server.close());
-
   it('renders correctly', async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(['video 1 test', 'video 2 test']));
     const asFragment = await act(async () => {
-      return render(
-        <MemoryRouter>
-          <VideoGrid />
-        </MemoryRouter>
-      ).asFragment;
+      return render(<VideoGrid />).asFragment;
     });
     expect(asFragment()).toMatchSnapshot();
   });

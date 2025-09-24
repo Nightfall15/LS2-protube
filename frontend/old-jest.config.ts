@@ -2,10 +2,10 @@ import type { Config } from 'jest';
 
 const config: Config = {
   testEnvironment: 'jsdom',
-  setupFiles: ['<rootDir>/jest.polyfills.js', '<rootDir>/jest.setup.js'],
-  setupFilesAfterEnv: ['./setupTests.js'],
-  testEnvironmentOptions: {
-    customExportConditions: [''],
+  setupFiles: ['<rootDir>/jest.setup.js'],
+
+  transform: {
+    '^.+\\.(ts|tsx)$': 'ts-jest',
   },
   coverageThreshold: {
     global: {
@@ -15,6 +15,7 @@ const config: Config = {
       statements: 75,
     },
   },
+  testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],
 };
 
 export default config;

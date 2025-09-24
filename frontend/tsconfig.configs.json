@@ -4,6 +4,7 @@
     "noEmit": true,
     "outDir": "./dist/configs",
     "rootDir": "./",
-    "composite": true
+    "composite": true,
+    "mapRoot": "esnext"
   }
 }
