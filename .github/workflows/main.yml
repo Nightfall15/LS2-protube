@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - main
 
 jobs:
   build-and-test:
@@ -11,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Node.js for frontend
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
 
@@ -26,6 +29,10 @@ jobs:
         working-directory: frontend
         run: npm run build
 
+      - name: Run frontend tests with coverage
+        working-directory: frontend
+        run: npm test -- --coverage
+
       - name: Set up Java for backend
         uses: actions/setup-java@v5
         with:
@@ -36,18 +43,26 @@ jobs:
         working-directory: backend
         run: mvn -N io.takari:maven:wrapper
 
-      - name: Build backend
+      - name: Build and test backend with coverage
         working-directory: backend
-        run: ./mvnw clean install
-
-      - name: Run frontend tests
-        working-directory: frontend
-        run: npm test
+        run: ./mvnw clean verify
 
       - name: Run frontend lint
         working-directory: frontend
         run: npm run lint
 
-      - name: Run backend tests
-        working-directory: backend
-        run: ./mvnw test
+      # Upload Frontend Coverage
+      - name: Upload Frontend Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-coverage-report
+          path: frontend/coverage/lcov-report/
+          if-no-files-found: error
+
+      # Upload Backend Coverage
+      - name: Upload Backend Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-coverage-report
+          path: backend/target/site/jacoco/
+          if-no-files-found: error
