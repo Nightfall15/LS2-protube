@@ -60,13 +60,23 @@ def grab_video(v:str, id: int):
 
     video_info_filename = f"{STORE_DIR}/{id}_tmp.info.json"
 
-    with open(video_info_filename) as f:
+    with open(video_info_filename, "r", encoding="utf-8") as f:
         j = json.load(f)
         title = j["title"]
         categories = j["categories"]
         tags = j["tags"]
         full_duration = j["duration"]
-        comments = [ {"text": comment["text"], "author": comment["author"][1:]} for comment in j["comments"] ] if "comments" in j else []
+        view_count = j["view_count"]
+        like_count = j["like_count"] if "like_count" in j else 0
+        channel = j["channel"]
+        channel_follower_count = j["channel_follower_count"]
+        timestamp = j["timestamp"]
+        comments = [ 
+            {"text": comment["text"],
+             "author": comment["author"][1:],
+             "timestamp": comment["timestamp"],
+             "like_count": comment["like_count"]
+            } for comment in j["comments"] ] if "comments" in j else []
 
     os.remove(video_info_filename)
 
@@ -95,16 +105,21 @@ def grab_video(v:str, id: int):
         "duration": round(float(cut_params["duration"]), 2),
         "title": title,
         "user": j["channel"],
+        "timestamp": timestamp,
         "meta": {
             "description": j["description"],
             "categories": categories,
             "tags": tags,
+            "view_count": view_count,
+            "like_count": like_count,
+            "channel": channel,
+            "channel_follower_count": channel_follower_count,
             "comments": comments
         }
     }
 
     with open(f"{STORE_DIR}/{id}.json", 'w', encoding='utf-8') as o:
-        json.dump(info, o)
+        json.dump(info, o, ensure_ascii=False, indent=4)
 
 
 def get_videos():
@@ -114,7 +129,7 @@ def get_videos():
         videos = f.readlines()
 
         sanitized_videos = [line.strip() for line in videos if len(line.strip()) > 0 and not line.startswith("--")]
-        return [video for video in sanitized_videos if random.randint(0, 100) < 75]
+        return [video for video in sanitized_videos if random.randint(0, 100) < 70]
 
 
 def grab_videos():
@@ -122,12 +137,15 @@ def grab_videos():
     video_count = len(videos)
 
     for video, id in zip(videos, range(video_count)):
-        progress = int((float(id) / video_count) * 100)
-        print(f"Grabbing your videos... {progress}%", end='\r')
-        sys.stdout.flush()
-        grab_video(video, id)
+        try:
+            progress = int((float(id) / video_count) * 100)
+            print(f"{video} Picking your videos... {progress}%", end='\r')
+            sys.stdout.flush()
+            grab_video(video, id)
+        except FileNotFoundError as e:
+            print(f"Error with video: {video} -- Skipped")
 
-    print(f"Grabbing your videos... done")
+    print(f"Picking your videos... done")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
