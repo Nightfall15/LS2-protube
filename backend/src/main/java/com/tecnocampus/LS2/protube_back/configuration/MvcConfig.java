@@ -19,11 +19,10 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String property = env.getProperty("pro_tube.store.dir");
         registry
            .addResourceHandler("/media/**")
            .addResourceLocations(
-                   String.format("file:%s", property));
+                   String.format("file:%s", env.getProperty("pro_tube.store.dir")));
 
         registry.addResourceHandler("/**")
            .addResourceLocations("classpath:/static/", "classpath:/public/",
@@ -35,6 +34,8 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
+                .allowedOriginPatterns("*");
+        registry.addMapping("/auth/**")
                 .allowedOriginPatterns("*");
     }
 }
