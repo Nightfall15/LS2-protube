@@ -10,12 +10,17 @@ const VideoGrid = () => {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
         setSomeData(data);
       });
   }, []);
 
-  return <div className="row g-4">{someData?.map((entity) => '' + entity)}</div>;
+  return (
+    <ul className="row g-4">
+      {someData?.map((entity) => (
+        <li>{entity}</li>
+      ))}
+    </ul>
+  );
 };
 
 export default VideoGrid;

@@ -1,12 +1,17 @@
-import type { Config } from 'jest';
+import { createDefaultPreset } from 'ts-jest';
 
-const config: Config = {
-  testEnvironment: 'jsdom',
-  setupFiles: ['<rootDir>/jest.polyfills.js', '<rootDir>/jest.setup.js'],
-  setupFilesAfterEnv: ['./setupTests.js'],
-  testEnvironmentOptions: {
-    customExportConditions: [''],
+const tsJestTransformCfg = createDefaultPreset().transform;
+
+/** @type {import("jest").Config} **/
+export default {
+  preset: 'ts-jest',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  testEnvironment: 'jest-environment-jsdom',
+  transform: {
+    ...tsJestTransformCfg,
   },
+  collectCoverage: true,
+  coverageReporters: ['json', 'html'],
   coverageThreshold: {
     global: {
       branches: 75,
@@ -16,5 +21,3 @@ const config: Config = {
     },
   },
 };
-
-export default config;

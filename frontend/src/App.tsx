@@ -1,42 +1,41 @@
 import './App.css';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { BACKEND_URL } from './utils.ts';
+import { useAllVideos } from './useAllVideos';
 
 function App() {
-  const [value, setValue] = useState<string[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    const getVideos = async () => {
-      setLoading(true);
-      const response = await axios.get<string[]>(`${BACKEND_URL}/api/videos`);
-      setValue(response.data);
-      setLoading(false);
-    };
-    getVideos().then();
-  }, []);
-
   return (
     <div className="App">
       <header className="App-header">
         <img src="/protube-logo-removebg-preview.png" className="App-logo" alt="logo" />
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <>
-            {' '}
-            <strong>Videos available:</strong>
-            <ul>
-              {value.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </>
-        )}
+        <ContentApp />
       </header>
     </div>
   );
+}
+
+function ContentApp() {
+  const { loading, message, value } = useAllVideos();
+  switch (loading) {
+    case 'loading':
+      return <div>Loading...</div>;
+    case 'error':
+      return (
+        <div>
+          <h3>Error</h3> <p>{message}</p>
+        </div>
+      );
+    case 'success':
+      return (
+        <>
+          <strong>Videos available:</strong>
+          <ul>
+            {value.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </>
+      );
+  }
+  return <div>Idle...</div>;
 }
 
 export default App;
