@@ -13,29 +13,33 @@ function App() {
 }
 
 function ContentApp() {
-  const { loading, message, value } = useAllVideos();
-  switch (loading) {
-    case 'loading':
-      return <div>Loading...</div>;
-    case 'error':
-      return (
-        <div>
-          <h3>Error</h3> <p>{message}</p>
-        </div>
-      );
-    case 'success':
-      return (
-        <>
-          <strong>Videos available:</strong>
-          <ul>
-            {value.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </>
-      );
+  const { videos, loading } = useAllVideos();
+  // console.log('Loading:', loading);
+  console.log('Videos array:', videos);
+  // console.log('Videos length:', videos?.length);
+
+  if (loading === 'loading' || loading === 'idle') {
+    return <div>Loading...</div>;
   }
-  return <div>Idle...</div>;
+
+  if (loading === 'error') {
+    return <div>Error loading videos</div>;
+  }
+
+  return (
+    <div>
+      {videos.map((video) => (
+        <div key={video.id}>
+          <h3>{video.title || `Video ${video.id}`}</h3>
+          {video.description && <p>{video.description}</p>}
+          <video width="320" height="240" controls poster={`/api/videos/thumbnail/${video.id}`}>
+            <source src={`/api/videos/stream/${video.id}`} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export default App;
