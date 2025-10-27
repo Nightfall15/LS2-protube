@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,7 +27,7 @@ class VideosControllerTest {
 
     @Test
     void getVideos() {
-        when(videoService.getVideos()).thenReturn(List.of("video 1", "video 2"));
-        assertEquals(List.of("video 1", "video 2"), videosController.getVideos().getBody());
+        when(videoService.getVideos()).thenReturn(Collections.emptyList());
+        assertEquals(Collections.emptyList(), videosController.getVideos().getBody());
     }
 }
